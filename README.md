@@ -27,4 +27,57 @@ O projeto segue uma **Arquitetura em Camadas (Layered Architecture)** bem defini
 
 1.  **Controller Layer:** Recebe as requisições HTTP e valida os dados de entrada.
 2.  **Service Layer:** Contém toda a regra de negócio (ex: verificar duplicidade de e-mail, lógica de agendamento).
-3.  **Repository Layer:** Interface com o
+3.  **Repository Layer:** Interface com o banco de dados.
+4.  **Domain/Model:** Entidades JPA que espelham o banco.
+5.  **DTOs (Records):** Objetos imutáveis para transferência de dados, garantindo que a API não exponha suas entidades internas.
+
+### 💡 Destaques de Implementação
+* **Gestão de Áreas de Mentoria:** O sistema identifica automaticamente se uma área (ex: "Java") já existe no banco ao cadastrar um mentor. Se não existir, ela é criada dinamicamente.
+* **Agendamento Inteligente:** O sistema de Agenda valida disponibilidade, evita conflitos de horários e gerencia status (AGENDADO, CANCELADO, CONCLUÍDO).
+* **Segurança:** As senhas nunca são salvas em texto plano; utilizamos `BCryptPasswordEncoder` antes da persistência.
+
+## ⚙️ Como Rodar o Projeto
+
+### Pré-requisitos
+* Java 17 ou superior instalado.
+* Maven instalado.
+
+### Passo a passo
+1.  Clone o repositório:
+    ```bash
+    git clone [https://github.com/seu-usuario/mentoring-platform.git](https://github.com/seu-usuario/mentoring-platform.git)
+    ```
+2.  Entre na pasta:
+    ```bash
+    cd mentoring-platform
+    ```
+3.  Instale as dependências e compile (importante para o MapStruct gerar os códigos):
+    ```bash
+    mvn clean install -DskipTests
+    ```
+4.  Execute a aplicação:
+    ```bash
+    mvn spring-boot:run
+    ```
+5.  Acesse a documentação ou teste via Postman:
+    * URL Base: `http://localhost:8080`
+    * H2 Console: `http://localhost:8080/h2-console`
+
+## 📝 Endpoints Principais (WIP)
+
+* `POST /users` - Criação de novos mentores/alunos.
+* `POST /agendas` - Agendamento de mentorias.
+* `GET /availabilities` - Listagem de horários disponíveis.
+
+## 🔮 Próximos Passos (Roadmap)
+
+O projeto está em evolução constante. As próximas features planejadas são:
+
+- [ ] Implementar Autenticação via **JWT (JSON Web Token)**.
+- [ ] Criar testes unitários com **JUnit 5 e Mockito**.
+- [ ] Migrar banco de dados para **PostgreSQL/Docker**.
+- [ ] Adicionar envio de e-mail de confirmação de agendamento.
+- [ ] Criar filtros avançados de busca (Specification Pattern).
+
+---
+Desenvolvido por **Anthonny** como parte do portfólio de Backend Developer.
